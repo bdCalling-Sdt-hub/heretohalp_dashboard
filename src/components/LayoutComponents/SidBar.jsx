@@ -9,54 +9,48 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
-
+import { GoStopwatch } from "react-icons/go";
+import { BsBarChart } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { HiOutlineUsers } from "react-icons/hi";
+import { IoSettingsOutline } from "react-icons/io5";
 const items = [
   {
     key: "dashboard",
     label: "Dashboard",
-    icon: dashboard,
+    icon: <GoStopwatch />,
     link: "/",
+  },
+  {
+    key: "blog",
+    label: "Blog",
+    icon: <BsBarChart />,
+    link: "/dashboard/blog",
   },
   {
     key: "userManagement",
     label: "User Management",
-    icon: user,
+    icon: <FiUser />,
     link: "/dashboard/UserManagement",
   },
   {
-    key: "creatorManagement",
-    label: "Creator Management",
-    icon: create,
-    link: "/dashboard/CreatorManagement",
+    key: "manageTicket",
+    label: "Manage Ticket",
+    icon: <MdOutlineSpaceDashboard />,
+    link: "/dashboard/manageTicket",
   },
+  
   {
-    key: "categoriesManagement",
-    label: "Categories Management",
-    icon: categorie,
-    link: "/dashboard/CategoriesManagement/Categories",
-    children: [
-      {
-        key: "categoriesManagement",
-        label: "Categories",
-        link: "/dashboard/CategoriesManagement/Categories",
-      },
-      {
-        key: "subcategory",
-        label: "Subcategory",
-        link: "/dashboard/CategoriesManagement/Subcategory",
-      },
-    ],
-  },
-  {
-    key: "subscription",
-    label: "Subscription",
-    icon: subscription,
-    link: "/dashboard/Subscription",
+    key: "partnerManage",
+    label: "Partner Manage",
+    icon: <HiOutlineUsers />,
+    link: "/dashboard/partnerManage",
   },
   {
     key: "profile",
     label: "Settings",
-    icon: settings,
+    icon: <IoSettingsOutline />,
     link: "/dashboard/Settings/profile",
     children: [
       {
@@ -134,8 +128,8 @@ const SidBar = () => {
   return (
     <div className="custom-sidebar h-full bg-[#050505]">
       {/* Logo */}
-      <div className="custom-sidebar-logo flex justify-center">
-        <img src={logo} alt="Logo" className="w-[160px]" />
+      <div className="mt-32">
+        
       </div>
 
       {/* Sidebar Menu */}
@@ -144,24 +138,24 @@ const SidBar = () => {
           <div key={item.key}>
             <Link
               to={item.link}
-              className={`menu-item my-4 mx-5 py-3 px-3 flex items-center cursor-pointer ${
+              className={`menu-item my-4 ml-16 mr-3 py-3 px-3 flex items-center cursor-pointer ${
                 selectedKey === item.key
-                  ? "bg-[#EDC4C5] rounded-md"
-                  : "bg-white rounded-md hover:bg-gray-200"
+                  ? "bg-[#2E4CB9] text-white rounded-tr-sm rounded-br-sm"
+                  : "bg-white text-[#2E4CB9] rounded-tr-sm rounded-br-sm hover:bg-gray-200"
               }`}
               onClick={(e) => {
                 if (item.children) {
-                  e.preventDefault(); // Prevent navigation if it has children
-                  onParentClick(item.key); // Toggle expanded state
+                  e.preventDefault(); 
+                  onParentClick(item.key);
                 } else {
-                  setSelectedKey(item.key); // Set the selected key for normal links
+                  setSelectedKey(item.key); 
                 }
               }}
             >
-              <img src={item.icon} alt={item.label} className="w-5 h-5 mr-3" />
-              <span className="block w-full text-black">{item.label}</span>
+              <p className="w-5 h-5 mr-2 mt-1" >{item.icon}</p>
+              <span className="block w-full ">{item.label}</span>
 
-              {/* Show dropdown arrow if children exist */}
+          
               {item.children && (
                 <FaChevronRight
                   className={`ml-auto transform transition-all duration-300 ${
@@ -171,10 +165,10 @@ const SidBar = () => {
               )}
             </Link>
 
-            {/* Show children menu if expanded */}
+         
             {item.children && (
               <div
-                className={`children-menu bg-white -my-2 mx-5  text-black transition-all duration-300 ${
+                className={`children-menu bg-white -my-2 ml-16 mr-3 transition-all duration-300 ${
                   expandedKeys.includes(item.key) ? "expanded" : ""
                 }`}
                 style={{
@@ -188,17 +182,17 @@ const SidBar = () => {
                   <Link
                     key={child.key}
                     to={child.link}
-                    className={`menu-item p-4 flex items-center cursor-pointer ${
+                    className={`menu-item py-3 px-4 flex items-center cursor-pointer ${
                       selectedKey === child.key
-                        ? "bg-[#EDC4C5]"
-                        : "hover:bg-gray-200"
+                        ? "bg-[#2E4CB9] text-white"
+                        : " text-[#2E4CB9]"
                     }`}
                     onClick={() => {
                       setSelectedKey(child.key); // Set the selected key for children
                       setExpandedKeys([]); // Close all expanded items
                     }}
                   >
-                    <span className="block w-full text-black">
+                    <span className="block w-full ">
                       {child.label}
                     </span>
                   </Link>
@@ -210,10 +204,10 @@ const SidBar = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="custom-sidebar-footer absolute bottom-0 w-full p-4">
+      <div className="custom-sidebar-footer absolute bottom-0 w-full py-4 pr-3 pl-16">
         <button
           onClick={handleLogout}
-          className="w-full flex bg-white text-start rounded-md text-black p-3"
+          className="w-full flex  bg-white text-start  rounded-tr-sm rounded-br-sm text-black p-3"
         >
           <span className="text-2xl">
             <IoIosLogIn />
