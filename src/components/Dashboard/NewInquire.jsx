@@ -1,8 +1,12 @@
-import React from 'react';
-import { Table, Avatar } from 'antd';
+import React, { useState } from 'react';
+import { Table, Avatar, Modal } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 
 export const NewInquire = () => {
+  // State to handle modal visibility and selected record
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
   // Sample Data
   const data = [
     {
@@ -90,16 +94,30 @@ export const NewInquire = () => {
     {
       title: 'View',
       key: 'view',
-      render: () => (
-        <EyeOutlined style={{ fontSize: '16px', color: '#1E3F66', cursor: 'pointer' }} />
+      render: (_, record) => (
+        <EyeOutlined
+          style={{ fontSize: '16px', color: '#1E3F66', cursor: 'pointer' }}
+          onClick={() => handleViewClick(record)}
+        />
       ),
       width: '5%',
     },
   ];
 
+  // Handle View button click
+  const handleViewClick = (record) => {
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
+
+  // Close Modal
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div>
-      <h2 className='text-xl font-medium pt-3 pl-6'>New Inquire</h2>
+      <h2 className="text-xl font-medium pt-3 pl-6">New Inquire</h2>
       <Table
         dataSource={data}
         columns={columns}
@@ -107,6 +125,22 @@ export const NewInquire = () => {
         bordered
         style={{ marginTop: '20px' }}
       />
+
+      {/* Modal to show selected record details */}
+      <Modal
+        title="User Details"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        {selectedRecord && (
+          <div>
+            <p><strong>Name:</strong> {selectedRecord.name.text}</p>
+            <p><strong>Email:</strong> {selectedRecord.email}</p>
+            <p><strong>Contact Number:</strong> {selectedRecord.contact}</p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

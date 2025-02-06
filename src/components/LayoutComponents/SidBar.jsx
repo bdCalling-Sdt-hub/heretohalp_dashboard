@@ -69,14 +69,19 @@ const items = [
         link: "/dashboard/Settings/PrivacyPolicy",
       },
       {
+        key: "contact",
+        label: "Contact Us",
+        link: "/dashboard/Settings/contact-us",
+      },
+      {
         key: "faq",
         label: "FAQ",
         link: "/dashboard/Settings/FAQ",
       },
       {
-        key: "about",
-        label: "About Us",
-        link: "/dashboard/Settings/aboutUs",
+        key: "feed",
+        label: "Feedback",
+        link: "/dashboard/Settings/feedback",
       },
     ],
   },

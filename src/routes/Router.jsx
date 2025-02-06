@@ -21,6 +21,7 @@ import Login from "../Auth/Login";
 import { Blog } from "../page/blog/Blog";
 import { ManageTicket } from "../page/manageTicket/ManageTicket";
 import { PartnerManage } from "../page/partnerManage/PartnerManage";
+import { ContactUs } from "../page/Settings/ContactUs";
 
 
 export const router = createBrowserRouter([
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
         element: <Profile></Profile>,
       },
       {
+        path: "/dashboard/Settings/contact-us",
+        element: <ContactUs></ContactUs>
+      },
+      {
         path: "/dashboard/Settings/notification",
         element: <Notification></Notification>,
       },
@@ -75,7 +80,7 @@ export const router = createBrowserRouter([
         element: <FAQ></FAQ>,
       },
       {
-        path: "/dashboard/Settings/aboutUs",
+        path: "/dashboard/Settings/feedback",
         element: <About></About>,
       },
       {

@@ -64,7 +64,7 @@ export const Blog = () => {
             <button className="text-[#EF4849]">
               <FaArrowLeft />
             </button>
-            <span className="text-lg font-semibold">Terms & Condition</span>
+            <span className="text-lg font-semibold">Blog</span>
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Input

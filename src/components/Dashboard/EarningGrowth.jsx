@@ -51,7 +51,7 @@ export const EarningGrowth = () => {
             <Bar
               dataKey="uv"
               stackId="a"
-              fill="#1E3F66"
+              fill="#0044B4"
               radius={[25, 25, 0, 0]}
             />
           </BarChart>

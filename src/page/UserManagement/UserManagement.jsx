@@ -1,11 +1,14 @@
-import React from "react";
-import { Table, Input, Avatar } from "antd";
+import React, { useState } from "react";
+import { Table, Input, Avatar, Modal } from "antd";
 import { EyeOutlined, StopOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
 const UserManagement = () => {
   const navigate = useNavigate();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
   // Sample Data
   const data = [
     {
@@ -90,15 +93,29 @@ const UserManagement = () => {
     {
       title: "Action",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <div style={{ display: "flex", gap: "10px" }}>
-          <EyeOutlined style={{ fontSize: "16px", cursor: "pointer" }} />
+          <EyeOutlined
+            style={{ fontSize: "16px", cursor: "pointer" }}
+            onClick={() => handleViewClick(record)}
+          />
           <StopOutlined style={{ fontSize: "16px", cursor: "pointer" }} />
         </div>
       ),
       width: "10%",
     },
   ];
+
+  // Handle View button click
+  const handleViewClick = (record) => {
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
+
+  // Close Modal
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <div className="bg-white h-screen">
@@ -111,14 +128,11 @@ const UserManagement = () => {
             marginBottom: "20px",
           }}
         >
-          <h1
-            onClick={() => navigate(-1)}
-            className="flex gap-4 cursor-pointer"
-          >
+          <h1 onClick={() => navigate(-1)} className="flex gap-4 cursor-pointer">
             <button className="text-[#EF4849]">
               <FaArrowLeft />
             </button>
-            <span className="text-lg font-semibold">Terms & Condition</span>
+            <span className="text-lg font-semibold">User Management</span>
           </h1>
           <Input
             placeholder="Search here..."
@@ -135,6 +149,28 @@ const UserManagement = () => {
           style={{ backgroundColor: "#fff" }}
         />
       </div>
+
+      {/* Modal to show selected record details */}
+      <Modal
+        title="User Details"
+        visible={isModalVisible}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        {selectedRecord && (
+          <div>
+            <p>
+              <strong>Name:</strong> {selectedRecord.name.text}
+            </p>
+            <p>
+              <strong>Driver License:</strong> {selectedRecord.driverLicense}
+            </p>
+            <p>
+              <strong>Email:</strong> {selectedRecord.email}
+            </p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };

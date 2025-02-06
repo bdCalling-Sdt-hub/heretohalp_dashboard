@@ -25,14 +25,14 @@ const About = () => {
   ];
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto h-screen">
       <div>
         <div className="flex justify-between mb-7 mt-4">
           <h1 className="flex gap-4 text-[#2F799E]">
             <button className="-mt-[20px]">
               <FaArrowLeft />
             </button>
-            <span className="text-lg font-semibold">User Management</span>
+            <span className="text-lg font-semibold">Feedback</span>
           </h1>
           <Input
             placeholder="Search here..."

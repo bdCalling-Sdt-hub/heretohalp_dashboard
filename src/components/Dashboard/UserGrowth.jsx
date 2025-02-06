@@ -34,7 +34,7 @@ export const UserGrowth = () => {
   return (
     <div>
       <div className='flex justify-between p-3 px-7'>
-        <p className='text-xl font-medium'>Host Growth</p>
+        <p className='text-xl font-medium'>Earning Growth</p>
         <Select
           defaultValue="2024"
           style={{ width: 120 }}
@@ -59,7 +59,7 @@ export const UserGrowth = () => {
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Area type="monotone" dataKey="uv" stroke="#0044B4" opacity={1} fillOpacity={1} fill="#001D4E" />
+            <Area type="monotone" dataKey="uv" stroke="#0044B4" opacity={1} fillOpacity={1} fill="#0044B4" />
           </AreaChart>
         </ResponsiveContainer>
       </div>
