@@ -15,8 +15,10 @@ import user from "../../assets/routerImg/user.png";
 import logo from "../../assets/header/logo.png";
 
 import { FaChevronRight } from "react-icons/fa";
-import UseAdminProfile from "../../hook/UseAdminProfile";
+
 import { IoIosLogIn } from "react-icons/io";
+import { useAdminProfileQuery } from "../../page/redux/api/userApi";
+import { imageUrl } from "../../page/redux/api/baseApi";
 
 const items = [
   {
@@ -92,13 +94,15 @@ const items = [
 ];
 
 const Header = () => {
+  const {data:adminProfile} = useAdminProfileQuery()
+  console.log(`${imageUrl}/${adminProfile?.data?.profile_image}`)
   const [selectedKey, setSelectedKey] = useState("dashboard");
   const [expandedKeys, setExpandedKeys] = useState([]);
   const navigate = useNavigate();
-  const [admin] = UseAdminProfile();
+
 
   const contentRef = useRef({});
-  console.log(admin);
+ 
 
   const onParentClick = (key) => {
     setExpandedKeys((prev) =>
@@ -138,13 +142,7 @@ const Header = () => {
         <div></div>
         <div className="flex gap-8 p-1 px-6">
           <div className="relative">
-            <Link to={"/dashboard/Settings/notification"}>
-              <div className="w-[45px] h-[45px] flex items-center justify-center text-xl rounded-full bg-white text-black ">
-                <span>
-                  <LuBell />
-                </span>
-              </div>
-            </Link>
+            
 
             <Space>
               <Radio.Group value={placement} onChange={onChange}></Radio.Group>
@@ -255,26 +253,24 @@ const Header = () => {
               </div>
             </Drawer>
 
-            <span className="absolute top-0 right-0 -mr-2  w-5 h-5 bg-white text-black text-xs flex items-center justify-center rounded-full">
-              0
-            </span>
+           
           </div>
 
-          <Link to={"/dashboard/Settings/profile"}>
+
             <div className="flex gap-3">
               <div>
                 <img
                   className="w-[45px] h-[45px]"
-                  src={profilee}
+                  src={`${imageUrl}/${adminProfile?.data?.profile_image}`}
                   alt="profile"
                 />
               </div>
               <div className="text-end">
-                <h3>{admin?.user?.name || "Loading..."}</h3>
+                <h3>{adminProfile?.data?.name}</h3>
                 <h4 className="text-sm">Admin</h4>
               </div>
             </div>
-          </Link>
+          
         </div>
       </div>
     </div>

@@ -1,166 +1,171 @@
-import { Modal, Form, Input } from "antd";
-import { useState } from "react";
-import { RiEdit2Fill } from "react-icons/ri";
-import { RxCross2 } from "react-icons/rx";
+import { Form, Input, Modal, Button, message } from 'antd'; // Import Ant Design Button
+import React, { useState } from 'react';
+import { GoPlus } from 'react-icons/go';
+import { IoArrowBackSharp } from 'react-icons/io5';
+import { MdDeleteOutline } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+
+import { toast } from 'sonner';
+import { useAddFaqMutation, useDeleteFaqMutation, useGetFaqQuery, useGetFaqUpdateMutation } from '../redux/api/manageApi';
+const { TextArea } = Input;
 
 const FAQ = () => {
-  const [open, setOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [currentFAQ, setCurrentFAQ] = useState(null);
-
+  const { data: faqData, refetch } = useGetFaqQuery();
+  console.log(faqData)
+  const [addFaq] = useAddFaqMutation();
+  const [deleteFaq] = useDeleteFaqMutation();
+  const [updateFaq] = useGetFaqUpdateMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedFaq, setSelectedFaq] = useState(null);
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-  const faq = [
-    {
-      id: 1,
-      question: "What is an affiliate e-commerce website?",
-      answer: "It is a website where affiliates earn commissions by promoting products from other companies.",
-    },
-    {
-      id: 2,
-      question: "How does affiliate marketing work?",
-      answer: "Affiliates promote products using a unique link and earn a commission on sales made through that link.",
-    },
-    {
-      id: 3,
-      question: "What are the benefits of affiliate marketing?",
-      answer: "Affiliate marketing provides a passive income stream, flexibility, and low startup costs.",
-    },
-  ];
-
-  const handleAddFAQ = () => {
+  const handleAddFaq = () => {
+    setLoading(true); 
     form.validateFields().then((values) => {
-      console.log("New FAQ Added:", values);
-      form.resetFields();
-      setOpen(false);
+      addFaq(values)
+        .unwrap()
+        .then(() => {
+          refetch();
+          message.success( 'FAQ added successfully!');
+          setIsModalOpen(false);
+          form.resetFields();
+        })
+        .catch((error) => {
+          message.error('Error adding FAQ:', error);
+        })
+        .finally(() => setLoading(false));
     });
   };
 
-  const handleUpdateFAQ = () => {
+  const handleUpdateFaq = () => {
+    setLoading(true); 
     form.validateFields().then((values) => {
-      console.log("FAQ Updated:", values);
-      form.resetFields();
-      setEditOpen(false);
+      updateFaq({ id: selectedFaq._id, data: values })
+        .unwrap()
+        .then(() => {
+          refetch();
+          message.success('FAQ updated successfully!');
+          setIsEditModalOpen(false);
+          form.resetFields();
+        })
+        .catch((error) => {
+          message.error('Error updating FAQ:', error);
+        })
+        .finally(() => setLoading(false));
     });
   };
 
-  const openEditModal = (faqItem) => {
-    setCurrentFAQ(faqItem);
-    form.setFieldsValue(faqItem);
-    setEditOpen(true);
+  const handleDeleteFaq = (id) => {
+    console.log('First ID:', id);
+  
+    deleteFaq({ id })
+      .unwrap()
+      .then((response) => {
+        console.log('Response:', response);
+        message.success(response?.message  );
+      })
+      .catch((error) => {
+        message.error(error?.data?.message  );
+      });
   };
-
-  const closeModal = () => {
-    setOpen(false);
-    setEditOpen(false);
-    setCurrentFAQ(null);
-    form.resetFields();
+  
+  const openEditModal = (faq) => {
+    setSelectedFaq(faq);
+    form.setFieldsValue(faq);
+    setIsEditModalOpen(true);
   };
 
   return (
-    <div>
-      <div className="flex justify-end">
-        <button
-          onClick={() => setOpen(true)}
-          className="bg-[#02111E] py-2 px-3 rounded text-white"
-        >
-          + Add FAQ
-        </button>
+    <div className="bg-white rounded-md p-5">
+      <div className="flex">
+        <Link to={-1} className="py-1 px-2 rounded-md flex justify-start items-center gap-1">
+          <IoArrowBackSharp className="text-[var(--primary-color)]" />
+        </Link>
+        <p className="font-semibold text-[18px]">FAQ</p>
       </div>
 
-      <div className="mt-20">
-        {faq.map((item) => (
-          <div key={item.id} className="mt-6  flex">
-            <div className="w-[98%]">
-              <div className="bg-[#272121] p-1 rounded-md text-white flex justify-between">
-                <div>Q: {item.question}</div>
-                <button
-                  onClick={() => openEditModal(item)}
-                  className="text-[#555555] text-2xl pr-4"
-                >
-                  <RiEdit2Fill />
+      <div className="grid grid-cols-2 gap-5 mt-2">
+        {faqData?.data?.map((faq, i) => (
+          <div key={faq._id} className="p-2">
+            <p className="pb-3">Question no: {i + 1}</p>
+            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq.question}</p>
+            <div className="flex justify-between">
+              <p className="py-2">Answer</p>
+              <div className="flex gap-4">
+                <button onClick={() => openEditModal(faq)} className="py-2">
+                  Edit
                 </button>
-              </div>
-              <div className="mt-3 bg-[#BCBABA26] p-3 rounded-md shadow col-span-1">
-                {item.answer}
+                <div className="py-2">
+                  <MdDeleteOutline
+                    className="text-xl cursor-pointer"
+                    onClick={() => handleDeleteFaq(faq._id)}
+                  />
+                </div>
               </div>
             </div>
-            <div
-              className="text-2xl mt-1 w-[2%] cursor-pointer"
-              onClick={() => console.log(`FAQ Deleted: ${item.id}`)}
-            >
-              <RxCross2 />
-            </div>
+            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq.answer}</p>
           </div>
         ))}
       </div>
 
-      {/* Add FAQ Modal */}
-      <Modal
-        centered
-        open={open}
-        onCancel={closeModal}
-        footer={null}
-        width={500}
-      >
-        <h1 className="text-xl mb-2">+ Add FAQ</h1>
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="question"
-            label="Question"
-            rules={[{ required: true, message: "Please enter a question" }]}
-          >
-            <Input placeholder="Enter question here..." />
+      <div className="flex items-center justify-center mt-20">
+        <Button
+          onClick={() => setIsModalOpen(true)}
+          type="primary"
+          shape="round"
+          size="large"
+          icon={<GoPlus />}
+        >
+          Add FAQ
+        </Button>
+      </div>
+
+      <Modal centered open={isModalOpen} footer={null} onCancel={() => setIsModalOpen(false)}>
+        <p className="text-center font-semibold pb-5 text-xl">Add FAQ</p>
+        <Form form={form}>
+          <Form.Item name="question" rules={[{ required: true, message: 'Please enter a question' }]}>
+            <Input placeholder="Type question here..." />
           </Form.Item>
-          <Form.Item
-            name="answer"
-            label="Answer"
-            rules={[{ required: true, message: "Please enter an answer" }]}
-          >
-            <Input.TextArea rows={4} placeholder="Enter answer here..." />
+          <Form.Item name="answer" rules={[{ required: true, message: 'Please enter an answer' }]}>
+            <TextArea rows={4} placeholder="Type answer here..." />
           </Form.Item>
-          <div className="flex justify-center mt-4">
-            <button
-              onClick={handleAddFAQ}
-              className="bg-[#02111E] rounded py-2 px-4 text-white"
+          <div className="flex items-center justify-center mt-2">
+            <Button
+              onClick={handleAddFaq}
+              type="primary"
+              shape="round"
+              size="large"
+              loading={loading} 
+              style={{ background: "black", borderColor: "#2F799E" }} // Loading state
             >
-              Publish
-            </button>
+              Save
+            </Button>
           </div>
         </Form>
       </Modal>
 
-      {/* Edit FAQ Modal */}
-      <Modal
-        centered
-        open={editOpen}
-        onCancel={closeModal}
-        footer={null}
-        width={500}
-      >
-        <h1 className="text-xl mb-2">Edit FAQ</h1>
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="question"
-            label="Question"
-            rules={[{ required: true, message: "Please enter a question" }]}
-          >
-            <Input placeholder="Enter question here..." />
+      <Modal centered open={isEditModalOpen} footer={null} onCancel={() => setIsEditModalOpen(false)}>
+        <p className="text-center font-semibold pb-5 text-xl">Edit FAQ</p>
+        <Form form={form}>
+          <Form.Item name="question" rules={[{ required: true, message: 'Please enter a question' }]}>
+            <Input placeholder="Type question here..." />
           </Form.Item>
-          <Form.Item
-            name="answer"
-            label="Answer"
-            rules={[{ required: true, message: "Please enter an answer" }]}
-          >
-            <Input.TextArea rows={4} placeholder="Enter answer here..." />
+          <Form.Item name="answer" rules={[{ required: true, message: 'Please enter an answer' }]}>
+            <TextArea rows={4} placeholder="Type answer here..." />
           </Form.Item>
-          <div className="flex justify-center mt-4">
-            <button
-              onClick={handleUpdateFAQ}
-              className="bg-[#02111E] rounded py-2 px-4 text-white"
+          <div className="flex items-center justify-center mt-2">
+            <Button
+              onClick={handleUpdateFaq}
+              type="primary"
+              shape="round"
+              size="large"
+              loading={loading}
+              style={{ background: "black", borderColor: "#2F799E" }} // Loading state
             >
-              Update
-            </button>
+              Save
+            </Button>
           </div>
         </Form>
       </Modal>

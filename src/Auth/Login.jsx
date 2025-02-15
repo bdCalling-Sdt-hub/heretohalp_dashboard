@@ -1,11 +1,38 @@
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginAdminMutation } from "../page/redux/api/userApi";
+import { useDispatch } from "react-redux";
+import { setToken } from "../page/redux/features/auth/authSlice";
 
-import { Button, Checkbox, Form, Input, Spin } from "antd";
-import { Link } from "react-router-dom";
 const Login = () => {
-  
-  const onFinish = (values) => {
-    console.log(values)
+  const [adminLogin, { isLoading }] = useLoginAdminMutation(); // Added isLoading to show Spinner
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
+    const { email, password } = values;  // Changed 'username' to 'email'
+    const data = {
+      email: email,  
+      password: password,
+    };
+
+    try {
+      const response = await adminLogin(data).unwrap();
+      console.log(response);
+
+      if (response.success) {
+        // localStorage.setItem("accessToken", response.data.accessToken);
+        dispatch(setToken(response?.data?.accessToken))
+        message.success(response.message);
+        navigate("/");  
+      } else {
+        message.error(error?.data?.message );
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      message.error(error?.data?.message);
+    }
   };
+
   return (
     <div
       className="gap-0 flex-col flex justify-center items-center"
@@ -137,7 +164,7 @@ const Login = () => {
               htmlType="submit"
               className="login-form-button rounded-3xl"
               block
-              
+              loading={isLoading}  // Show Spinner if login is in progress
               style={{
                 height: "52px",
                 fontWeight: "400px",
@@ -146,7 +173,7 @@ const Login = () => {
                 marginTop: "56px",
               }}
             >
-             Sign In
+              Sign In
             </Button>
           </Form.Item>
         </Form>

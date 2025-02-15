@@ -22,6 +22,8 @@ import { Blog } from "../page/blog/Blog";
 import { ManageTicket } from "../page/manageTicket/ManageTicket";
 import { PartnerManage } from "../page/partnerManage/PartnerManage";
 import { ContactUs } from "../page/Settings/ContactUs";
+import { AddBlog } from "../page/blog/AddBlog";
+import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 
 
 export const router = createBrowserRouter([
@@ -29,7 +31,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: (
      
-        <DashboardLayout></DashboardLayout>
+        <ProtectedRoute><DashboardLayout></DashboardLayout></ProtectedRoute>
       
     ),
     children: [
@@ -44,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/blog",
         element: <Blog></Blog>
+      },
+      {
+        path: "/dashboard/blog/add-blog",
+        element: <AddBlog></AddBlog>
       },
       {
         path: "/dashboard/manageTicket",

@@ -15,6 +15,8 @@ import { FiUser } from "react-icons/fi";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { HiOutlineUsers } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { logout } from "../../page/redux/features/auth/authSlice";
 const items = [
   {
     key: "dashboard",
@@ -53,11 +55,7 @@ const items = [
     icon: <IoSettingsOutline />,
     link: "/dashboard/Settings/profile",
     children: [
-      {
-        key: "profile",
-        label: "Profile",
-        link: "/dashboard/Settings/profile",
-      },
+     
       {
         key: "terms",
         label: "Terms & Condition",
@@ -93,6 +91,7 @@ const SidBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const contentRef = useRef({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const currentPath = location.pathname;
@@ -126,7 +125,7 @@ const SidBar = () => {
 
   // Logout Function
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    dispatch(logout())
     navigate("/login");
   };
 

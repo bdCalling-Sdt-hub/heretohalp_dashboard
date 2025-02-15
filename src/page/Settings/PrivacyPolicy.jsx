@@ -1,65 +1,82 @@
-import  { useState, useRef, } from 'react';
-import JoditEditor from 'jodit-react';
-import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useMemo, useEffect } from "react";
+import JoditEditor from "jodit-react";
+import { Link } from "react-router-dom";
+import { IoArrowBackSharp } from "react-icons/io5";
 
+
+import { Button, message } from "antd";
+import { useGetPrivecyQuery, usePostPrivecyMutation } from "../redux/api/manageApi";
 
 const PrivacyPolicy = () => {
+  const { data: getTerms } = useGetPrivecyQuery();
 
+  const [addPrivecy] = usePostPrivecyMutation();
   const editor = useRef(null);
-  const [content, setContent] = useState('');
-  // const [isLoading, seLoading] = useState(false)
-  const navigate = useNavigate(); 
-  // const handleTerms = () => {
-  //     console.log(content)
-  // }
+  const [content, setContent] = useState("");
+  const [isLoading, seLoading] = useState(false);
+  const [id, setId] = useState("");
+
+  const handleTerms = async () => {
+    const description = content;  
+    seLoading(true);
+    const res = await addPrivecy({ description }).unwrap();
+    seLoading(false);
+    console.log("res", res);
+    message.success(res?.message || "Privecy Update successfully!");
+  };
   const config = {
-      readonly: false,
-      placeholder: 'Start typings...',
-      style: {
-          height: 600,
-      },
-      buttons: [
-          'image', 'fontsize', 'bold', 'italic', 'underline', '|',
-          'font', 'brush',
-          'align'
-      ]
-  }
+    readonly: false,
+    placeholder: "Start typings...",
+    style: {
+      height: 700,
+    },
+    buttons: [
+      "image",
+      "fontsize",
+      "bold",
+      "italic",
+      "underline",
+      "|",
+      "font",
+      "brush",
+      "align",
+    ],
+  };
+  useEffect(() => {
+    setContent(getTerms?.data?.description);
+  }, [getTerms]);
 
   return (
-    <div className=" mx-auto ">
-      <div className="flex justify-between mb-7 mt-4">
-      <h1 className="flex gap-4">
-          <button
-            className="text-[#EF4849] "
-            onClick={() => navigate(-1)} 
-          >
-            <FaArrowLeft />
+    <>
+      <div className="flex justify-between mb-7 mt-4 text-[#2F799E]">
+        <h1 className="flex gap-4">
+          <button className="" onClick={() => navigate(-1)}>
+            <IoArrowBackSharp />
           </button>
-          <span className="text-lg font-semibold">Privacy Policy</span>
+          <span className="text-lg font-semibold">Privecy & Policy</span>
         </h1>
-        
       </div>
 
-      <JoditEditor
-        ref={editor}
-        value={content}
-        config={config}
-        tabIndex={1}
-        onBlur={newContent => setContent(newContent)}
-        // onChange={newContent => { }}
-      />
-      
-
-      <div className="mt-5 flex justify-center">
-        <button
-       
-          className="bg-[#02111E] py-2 px-4 rounded text-white"
-        >
-          Save & change
-        </button>
+      <div className="custom-jodit-editor mx-5 ">
+        <JoditEditor
+          ref={editor}
+          value={content}
+          config={config}
+          tabIndex={1}
+          onBlur={(newContent) => setContent(newContent)}
+          onChange={(newContent) => {}}
+        />
+        <div className="flex items-center justify-center mt-5">
+          <Button
+            onClick={handleTerms}
+            className="bg-black text-white px-4 py-2 rounded-full test"
+            loading={isLoading}
+          >
+            Save Changes
+          </Button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

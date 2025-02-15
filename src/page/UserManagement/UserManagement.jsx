@@ -1,55 +1,34 @@
 import React, { useState } from "react";
-import { Table, Input, Avatar, Modal } from "antd";
+import { Table, Input, Avatar, Modal, message } from "antd";
 import { EyeOutlined, StopOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import { useAllUserQuery, useUserBlockMutation } from "../redux/api/userApi";
 
 const UserManagement = () => {
+  const [searchTerm, setSearch] = useState("");
+  const { data: userData, refetch } = useAllUserQuery({ searchTerm });
+  const [userBlock] = useUserBlockMutation();
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
-  // Sample Data
-  const data = [
-    {
-      key: "1",
-      sno: "#12333",
+  const data =
+    userData?.data?.map((user, index) => ({
+      key: index + 1,
+      sno: `#${index + 1}`,
       name: {
         avatar: "https://i.pravatar.cc/150?img=1",
-        text: "dindiniya",
-        phone: "08+ 123 456 789",
+        text: user.authId?.name || "Unknown",
+        phone: user.phoneNumber || "N/A",
       },
-      driverLicense: "10698755689787",
-      email: "bockelboy@att.com",
-      location: "Kent, Utah",
-    },
-    {
-      key: "2",
-      sno: "#12333",
-      name: {
-        avatar: "https://i.pravatar.cc/150?img=2",
-        text: "dindiniya",
-        phone: "08+ 123 456 789",
-      },
-      driverLicense: "10875428236852",
-      email: "csilvers@verizon.com",
-      location: "Great Falls, Maryland",
-    },
-    {
-      key: "3",
-      sno: "#12333",
-      name: {
-        avatar: "https://i.pravatar.cc/150?img=3",
-        text: "dindiniya",
-        phone: "08+ 123 456 789",
-      },
-      driverLicense: "10687542368975",
-      email: "qamaho@mail.com",
-      location: "Lansing, Illinois",
-    },
-  ];
+      driverLicense: "N/A",
+      email: user.email,
+      location: "N/A",
+      isBlocked: user.authId?.isBlocked || false,
+      authId: user.authId?._id,
+    })) || [];
 
-  // Table Columns
   const columns = [
     {
       title: "S no.",
@@ -99,20 +78,46 @@ const UserManagement = () => {
             style={{ fontSize: "16px", cursor: "pointer" }}
             onClick={() => handleViewClick(record)}
           />
-          <StopOutlined style={{ fontSize: "16px", cursor: "pointer" }} />
+          <StopOutlined
+            style={{
+              fontSize: "16px",
+              cursor: "pointer",
+              color: record.isBlocked ? "red" : "black",
+            }}
+            onClick={() => handleBlockClick(record)}
+          />
         </div>
       ),
       width: "10%",
     },
   ];
 
-  // Handle View button click
   const handleViewClick = (record) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
   };
 
-  // Close Modal
+  const handleBlockClick = async (record) => {
+    const { authId, isBlocked } = record;
+    const action = isBlocked ? "no" : "yes";
+    const data = {
+      authId,
+      isBlocked: action,
+    };
+
+    try {
+      const response = await userBlock(data).unwrap();
+      if (response.success) {
+        message.success(response?.message);
+        refetch();
+      } else {
+        message.error("Failed to change user status");
+      }
+    } catch (error) {
+      message.error("An error occurred while updating the status");
+    }
+  };
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -128,19 +133,22 @@ const UserManagement = () => {
             marginBottom: "20px",
           }}
         >
-          <h1 onClick={() => navigate(-1)} className="flex gap-4 cursor-pointer">
+          <h1
+            onClick={() => navigate(-1)}
+            className="flex gap-4 cursor-pointer"
+          >
             <button className="text-[#EF4849]">
               <FaArrowLeft />
             </button>
             <span className="text-lg font-semibold">User Management</span>
           </h1>
           <Input
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search here..."
             style={{ width: 300, padding: "9px 5px 9px 5px" }}
           />
         </div>
 
-        {/* Table */}
         <Table
           dataSource={data}
           columns={columns}
@@ -150,7 +158,6 @@ const UserManagement = () => {
         />
       </div>
 
-      {/* Modal to show selected record details */}
       <Modal
         title="User Details"
         visible={isModalVisible}
