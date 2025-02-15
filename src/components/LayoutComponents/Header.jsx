@@ -260,7 +260,7 @@ const Header = () => {
             <div className="flex gap-3">
               <div>
                 <img
-                  className="w-[45px] h-[45px]"
+                  className="w-[45px] h-[45px] rounded-full"
                   src={`${imageUrl}/${adminProfile?.data?.profile_image}`}
                   alt="profile"
                 />
