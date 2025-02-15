@@ -9,13 +9,14 @@ export const BusinessPartner = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const { data: allPartner } = useGetAllPartnerQuery();
+  console.log(allPartner)
   const navigate = useNavigate();
 
   const data = allPartner?.data?.result?.map((partner, index) => ({
     key: partner._id,
     sno: `#${index + 1}`,
     name: {
-      avatar: 'https://i.pravatar.cc/150?img=' + (index + 1),
+      
       text: partner.fullName,
     },
     email: partner.email,
@@ -37,7 +38,7 @@ export const BusinessPartner = () => {
       key: 'name',
       render: (name) => (
         <div className="flex items-center">
-          <Avatar src={name.avatar} alt={name.text} />
+         
           <span style={{ marginLeft: 8 }}>{name.text}</span>
         </div>
       ),

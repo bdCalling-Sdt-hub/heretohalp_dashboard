@@ -4,10 +4,12 @@ import { EyeOutlined, StopOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useAllUserQuery, useUserBlockMutation } from "../redux/api/userApi";
+import { imageUrl } from "../redux/api/baseApi";
 
 const UserManagement = () => {
   const [searchTerm, setSearch] = useState("");
   const { data: userData, refetch } = useAllUserQuery({ searchTerm });
+  console.log(userData)
   const [userBlock] = useUserBlockMutation();
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -18,7 +20,7 @@ const UserManagement = () => {
       key: index + 1,
       sno: `#${index + 1}`,
       name: {
-        avatar: "https://i.pravatar.cc/150?img=1",
+        avatar: <img src={`${imageUrl}/${user?.profile_image}`} alt="" />,
         text: user.authId?.name || "Unknown",
         phone: user.phoneNumber || "N/A",
       },
