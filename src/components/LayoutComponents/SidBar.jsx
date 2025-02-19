@@ -50,6 +50,12 @@ const items = [
     link: "/dashboard/partnerManage",
   },
   {
+    key: "service",
+    label: "Service Pricing",
+    icon: <HiOutlineUsers />,
+    link: "/dashboard/service-pricing",
+  },
+  {
     key: "profile",
     label: "Settings",
     icon: <IoSettingsOutline />,

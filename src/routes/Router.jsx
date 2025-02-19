@@ -24,6 +24,7 @@ import { PartnerManage } from "../page/partnerManage/PartnerManage";
 import { ContactUs } from "../page/Settings/ContactUs";
 import { AddBlog } from "../page/blog/AddBlog";
 import ProtectedRoute from "../protectedRoute/ProtectedRoute";
+import { ServicesPricing } from "../page/service/ServicesPricing";
 
 
 export const router = createBrowserRouter([
@@ -60,7 +61,11 @@ export const router = createBrowserRouter([
         element: <PartnerManage></PartnerManage>
       },
       
-     
+      {
+        path: "/dashboard/service-pricing",
+        element: <ServicesPricing></ServicesPricing>
+      },
+      
       {
         path: "/dashboard/Settings/profile",
         element: <Profile></Profile>,
