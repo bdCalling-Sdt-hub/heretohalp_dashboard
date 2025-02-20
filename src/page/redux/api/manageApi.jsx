@@ -66,6 +66,16 @@ const blog = baseApi.injectEndpoints({
       providesTags: ["terms"],
     }),
 
+    getReview: builder.query({
+      query: () => {
+          return {
+              url:'/review/get-all-review?limit=100',
+              method: 'GET',
+          };
+      },
+      providesTags: ['faq'],
+  }),
+
     getServicesPricing: builder.query({
       query: ({ serviceName }) => {
         return {
@@ -93,6 +103,16 @@ const blog = baseApi.injectEndpoints({
           url: "/review/post-review",
           method: "POST",
           body: data,
+        };
+      },
+      invalidatesTags: ["faq"],
+    }),
+
+    deleteReview: builder.mutation({
+      query: ( id ) => {
+        return {
+          url: `/review/delete-review?reviewId=${id}`,
+          method: "DELETE",
         };
       },
       invalidatesTags: ["faq"],
@@ -157,5 +177,7 @@ export const {
   usePostPrivecyMutation,
   useGetServicesPricingQuery,
   useUpdateServicesMutation,
-  useAddTestimonialsMutation
+  useAddTestimonialsMutation,
+  useGetReviewQuery,
+  useDeleteReviewMutation
 } = blog;

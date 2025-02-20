@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { useGetOverviewQuery } from '../../page/redux/api/manageApi';
 
+
+
 export const EarningGrowth = () => {
   const { data } = useGetOverviewQuery();
   const [chartData, setChartData] = useState([]);
