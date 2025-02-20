@@ -87,6 +87,18 @@ const blog = baseApi.injectEndpoints({
       invalidatesTags: ["faq"],
     }),
 
+    addTestimonials: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/review/post-review",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["faq"],
+    }),
+
+
     getFaq: builder.query({
       query: () => {
         return {
@@ -144,5 +156,6 @@ export const {
   useGetPrivecyQuery,
   usePostPrivecyMutation,
   useGetServicesPricingQuery,
-  useUpdateServicesMutation
+  useUpdateServicesMutation,
+  useAddTestimonialsMutation
 } = blog;

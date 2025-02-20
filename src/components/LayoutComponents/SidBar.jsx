@@ -83,6 +83,11 @@ const items = [
         link: "/dashboard/Settings/FAQ",
       },
       {
+        key: "testimonial",
+        label: "Testimonial",
+        link: "/dashboard/Settings/testimonials",
+      },
+      {
         key: "feed",
         label: "Feedback",
         link: "/dashboard/Settings/feedback",

@@ -25,6 +25,7 @@ import { ContactUs } from "../page/Settings/ContactUs";
 import { AddBlog } from "../page/blog/AddBlog";
 import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 import { ServicesPricing } from "../page/service/ServicesPricing";
+import { Testomonial } from "../page/testomonial/Testomonial";
 
 
 export const router = createBrowserRouter([
@@ -89,6 +90,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/Settings/FAQ",
         element: <FAQ></FAQ>,
+      },
+      {
+        path: "/dashboard/Settings/testimonials",
+        element: <Testomonial></Testomonial>
       },
       {
         path: "/dashboard/Settings/feedback",
