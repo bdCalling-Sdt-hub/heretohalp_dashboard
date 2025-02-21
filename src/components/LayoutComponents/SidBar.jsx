@@ -220,7 +220,7 @@ const SidBar = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="custom-sidebar-footer absolute bottom-0 w-full py-4 pr-3 pl-16">
+      <div className=" w-full py-4 pr-3 pl-16">
         <button
           onClick={handleLogout}
           className="w-full flex  bg-white text-start  rounded-tr-sm rounded-br-sm text-black p-3"
