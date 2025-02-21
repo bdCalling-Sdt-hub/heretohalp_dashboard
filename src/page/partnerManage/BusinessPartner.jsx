@@ -15,10 +15,7 @@ export const BusinessPartner = () => {
   const data = allPartner?.data?.result?.map((partner, index) => ({
     key: partner._id,
     sno: `#${index + 1}`,
-    name: {
-      
-      text: partner.fullName,
-    },
+    businessName: partner.businessName,
     email: partner.email,
     contact: partner.contactNumber,
     location: `${partner.city}, ${partner.state}, ${partner.country}`,
@@ -30,37 +27,31 @@ export const BusinessPartner = () => {
       title: 'S no.',
       dataIndex: 'sno',
       key: 'sno',
-      width: '10%'
+      width: '10%',
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (name) => (
-        <div className="flex items-center">
-         
-          <span style={{ marginLeft: 8 }}>{name.text}</span>
-        </div>
-      ),
-      width: '20%'
+      title: 'Business Name',
+      dataIndex: 'businessName',
+      key: 'businessName',
+      width: '20%',
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      width: '20%'
+      width: '20%',
     },
     {
       title: 'Contact Number',
       dataIndex: 'contact',
       key: 'contact',
-      width: '15%'
+      width: '15%',
     },
     {
       title: 'Location',
       dataIndex: 'location',
       key: 'location',
-      width: '15%'
+      width: '15%',
     },
     {
       title: 'View',
@@ -71,8 +62,8 @@ export const BusinessPartner = () => {
           onClick={() => handleViewClick(record)}
         />
       ),
-      width: '5%'
-    }
+      width: '5%',
+    },
   ];
 
   const handleViewClick = (record) => {
@@ -115,18 +106,15 @@ export const BusinessPartner = () => {
         onCancel={handleCancel}
         footer={null}
       >
-        {selectedRecord && (
+       {selectedRecord && (
           <div>
-            <p><strong>Name:</strong> {selectedRecord.fullName}</p>
+            <p><strong>Business Name:</strong> {selectedRecord.businessName}</p>
             <p><strong>Email:</strong> {selectedRecord.email}</p>
             <p><strong>Contact Number:</strong> {selectedRecord.contactNumber}</p>
             <p><strong>Location:</strong> {selectedRecord.city}, {selectedRecord.state}, {selectedRecord.country}</p>
-            <p><strong>Position:</strong> {selectedRecord.position}</p>
+            <p><strong>Type of Partnership:</strong> {selectedRecord.typeOfPartnership.join(', ')}</p>
+            <p><strong>Business Website:</strong> <a href={selectedRecord.businessWebsite} target="_blank" rel="noopener noreferrer">{selectedRecord.businessWebsite}</a></p>
             <p><strong>Description:</strong> {selectedRecord.description}</p>
-            <p><strong>Previous Job Title:</strong> {selectedRecord.previousJobTitle}</p>
-            <p><strong>Previous Job Duration:</strong> {new Date(selectedRecord.previousJobStartDate).toDateString()} - {new Date(selectedRecord.previousJobEndDate).toDateString()}</p>
-            <p><strong>Previous Job Description:</strong> {selectedRecord.previousJobDescription}</p>
-            <p><strong>Resume:</strong> <a href={selectedRecord.resume} target="_blank" rel="noopener noreferrer">Download</a></p>
           </div>
         )}
       </Modal>
