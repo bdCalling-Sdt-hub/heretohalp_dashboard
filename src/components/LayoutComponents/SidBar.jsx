@@ -17,6 +17,7 @@ import { HiOutlineUsers } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { logout } from "../../page/redux/features/auth/authSlice";
+import { TbSettingsDollar } from "react-icons/tb";
 const items = [
   {
     key: "dashboard",
@@ -52,7 +53,7 @@ const items = [
   {
     key: "service",
     label: "Service Pricing",
-    icon: <HiOutlineUsers />,
+    icon: <TbSettingsDollar />,
     link: "/dashboard/service-pricing",
   },
   {

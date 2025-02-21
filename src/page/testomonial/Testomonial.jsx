@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { imageUrl } from "../redux/api/baseApi";
 import { message } from "antd";
 import { useDeleteReviewMutation, useGetReviewQuery } from "../redux/api/manageApi";
+import { Link } from "react-router-dom";
 
 export const Testomonial = () => {
   const { data: reviewData } = useGetReviewQuery();
@@ -33,6 +34,7 @@ export const Testomonial = () => {
     <div className="h-screen bg-gray-100">
       <div>
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Testimonials</h2>
+<div className="flex justify-end my-4"><Link to={'/dashboard/Settings/addTestimonials'}><button className="bg-gray-300 p-3 px-6">Add</button></Link></div>
         {reviewData?.data?.result?.length > 0 ? (
           reviewData.data.result.map((review) => (
             <div key={review._id} className="flex items-start border-b pb-4 mb-4">
