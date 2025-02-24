@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://206.81.11.36:8001",
+  baseUrl: "https://api.blackeagletechsolutions.com",
   // prepareHeaders: (headers) => {
   //   const token = localStorage.getItem("accessToken");
   //   console.log(token);
@@ -31,4 +31,4 @@ export const baseApi = createApi({
   endpoints: () => ({}),
 });
 
-export const imageUrl = "http://206.81.11.36:8001";
+export const imageUrl = "https://api.blackeagletechsolutions.com";
