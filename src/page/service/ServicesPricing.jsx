@@ -125,7 +125,9 @@ export const ServicesPricing = () => {
             value={serviceName}
             onChange={handleServiceChange}
           >
+            
             <option value="Structured_Cabling">Structured Cabling</option>
+            <option value="Optimized_IT_Packages">Optimized IT Packages for Every Business Phase</option>
             <option value="Rack_And_Device">Rack And Device Installation</option>
             <option value="Break_Fix_Services">Break/Fix Services</option>
             <option value="Network_Migrations">Network Migrations And Cutovers</option>
