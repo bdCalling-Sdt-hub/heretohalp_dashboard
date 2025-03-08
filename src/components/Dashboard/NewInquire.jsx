@@ -21,14 +21,14 @@ console.log(userData)
       sno: `#${index + 1}`,
       name: {
         avatar: "https://i.pravatar.cc/150?img=1",
-        text: user.authId?.name || "Unknown",
-        phone: user.phoneNumber || "N/A",
+        text: user?.authId?.name || "Unknown",
+        phone: user?.phoneNumber || "N/A",
       },
       driverLicense: "N/A",
-      email: user.email,
+      email: user?.email,
       location: "N/A",
-      isBlocked: user.authId?.isBlocked || false,
-      authId: user.authId?._id,
+      isBlocked: user?.authId?.isBlocked || false,
+      authId: user?.authId?._id,
     })) || [];
 
   const columns = [
@@ -44,10 +44,10 @@ console.log(userData)
       key: "name",
       render: (name) => (
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <Avatar src={name.avatar} alt={name.text} />
+          <Avatar src={name?.avatar} alt={name?.text} />
           <div>
-            <div>{name.text}</div>
-            <div style={{ fontSize: "12px", color: "#888" }}>{name.phone}</div>
+            <div>{name?.text}</div>
+            <div style={{ fontSize: "12px", color: "#888" }}>{name?.phone}</div>
           </div>
         </div>
       ),
@@ -119,13 +119,13 @@ console.log(userData)
       {selectedRecord && (
         <div>
           <p>
-            <strong>Name:</strong> {selectedRecord.name.text}
+            <strong>Name:</strong> {selectedRecord?.name?.text}
           </p>
           <p>
-            <strong>Driver License:</strong> {selectedRecord.driverLicense}
+            <strong>Driver License:</strong> {selectedRecord?.driverLicense}
           </p>
           <p>
-            <strong>Email:</strong> {selectedRecord.email}
+            <strong>Email:</strong> {selectedRecord?.email}
           </p>
         </div>
       )}

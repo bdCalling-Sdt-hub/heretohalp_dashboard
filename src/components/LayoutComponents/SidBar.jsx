@@ -18,6 +18,8 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { logout } from "../../page/redux/features/auth/authSlice";
 import { TbSettingsDollar } from "react-icons/tb";
+import { PiNewspaperClippingLight } from "react-icons/pi";
+
 const items = [
   {
     key: "dashboard",
@@ -55,6 +57,12 @@ const items = [
     label: "Service Pricing",
     icon: <TbSettingsDollar />,
     link: "/dashboard/service-pricing",
+  },
+  {
+    key: "news",
+    label: "News",
+    icon: <PiNewspaperClippingLight />,
+    link: "/dashboard/news",
   },
   {
     key: "profile",

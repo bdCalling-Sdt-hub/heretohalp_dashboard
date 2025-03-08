@@ -36,26 +36,26 @@ export const Testomonial = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Testimonials</h2>
 <div className="flex justify-end my-4"><Link to={'/dashboard/Settings/addTestimonials'}><button className="bg-gray-300 p-3 px-6">Add</button></Link></div>
         {reviewData?.data?.result?.length > 0 ? (
-          reviewData.data.result.map((review) => (
-            <div key={review._id} className="flex items-start border-b pb-4 mb-4">
+          reviewData?.data?.result.map((review) => (
+            <div key={review?._id} className="flex items-start border-b pb-4 mb-4">
               <img
-                src={`${imageUrl}/${review.profile_image}`}
-                alt={review.userName}
+                src={`${imageUrl}/${review?.profile_image}`}
+                alt={review?.userName}
                 className="w-16 h-16 rounded-full mr-4"
               />
               <div className="flex-1">
-                <h3 className="font-bold text-lg text-gray-700">{review.userName}</h3>
+                <h3 className="font-bold text-lg text-gray-700">{review?.userName}</h3>
                 <p className="text-sm text-gray-500">
-                  {review.occupation} | {review.address}
+                  {review?.occupation} | {review?.address}
                 </p>
                 <p className="mt-2 text-gray-600 italic">"{review.review}"</p>
                 <p className="text-xs text-gray-400 mt-2">
-                  Reviewed on: {new Date(review.createdAt).toLocaleDateString()}
+                  Reviewed on: {new Date(review?.createdAt).toLocaleDateString()}
                 </p>
               </div>
               <button
                 className="bg-orange-600 text-white py-2 px-5 mt-4"
-                onClick={() => handleDelete(review._id)}
+                onClick={() => handleDelete(review?._id)}
               >
                 Delete
               </button>

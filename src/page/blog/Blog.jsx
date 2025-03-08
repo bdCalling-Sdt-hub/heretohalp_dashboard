@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import { Table, Button, Input, Modal,message } from "antd";
+import { Table, Button, Input, Modal, message } from "antd";
 import { EyeOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useGetAllBlogQuery } from "../redux/api/blogApi";
 import { imageUrl } from "../redux/api/baseApi";
 import { useDeleteBlogMutation } from "../redux/api/blogApi";
+import { useGetAllNewsSubscribeQuery } from "../redux/api/feedbackApi";
 
 export const Blog = () => {
   const [searchTerm, setSearch] = useState("");
-  const [deleteBlog] = useDeleteBlogMutation()
-  const { data: blogData } = useGetAllBlogQuery({searchTerm});
-  
+  const [deleteBlog] = useDeleteBlogMutation();
+  const { data: blogData } = useGetAllBlogQuery({ searchTerm });
+
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState(null);
-  console.log(selectedBlog)
+  console.log(selectedBlog);
 
   const handleViewClick = (record) => {
     setSelectedBlog(record);
@@ -27,13 +28,20 @@ export const Blog = () => {
     setSelectedBlog(null);
   };
 
-  const data = blogData?.data?.result?.map((blog, index) => ({
-    key: blog._id,
-    serialNo: `${index + 1}.`,
-    image: <img src={`${imageUrl}/${blog.blog_image}`} alt="Blog" style={{ width: 50, height: 50 }} />,
-    blogName: blog.title,
-    content: blog.content,
-  })) || [];
+  const data =
+    blogData?.data?.result?.map((blog, index) => ({
+      key: blog?._id,
+      serialNo: `${index + 1}.`,
+      image: (
+        <img
+          src={`${imageUrl}/${blog?.blog_image}`}
+          alt="Blog"
+          style={{ width: 50, height: 50 }}
+        />
+      ),
+      blogName: blog?.title,
+      content: blog?.content,
+    })) || [];
 
   const handleDelete = (record) => {
     // Confirmation popup before deletion
@@ -45,12 +53,12 @@ export const Blog = () => {
       cancelText: "Cancel",
       onOk: async () => {
         try {
-          const response = await deleteBlog(record.key); 
-          console.log(response.data.message) // Assuming deleteBlog is an async function
+          const response = await deleteBlog(record.key);
+          console.log(response?.data?.message); // Assuming deleteBlog is an async function
           if (response.data.success) {
-            message.success(response.data.message);
+            message.success(response?.data.message);
           } else {
-            message.error(error.data.message);
+            message.error(error?.data.message);
           }
         } catch (error) {
           console.error(error);
@@ -91,7 +99,7 @@ export const Blog = () => {
             onClick={() => handleViewClick(record)}
           />
           <DeleteOutlined
-          onClick={() => handleDelete(record)}
+            onClick={() => handleDelete(record)}
             style={{ fontSize: "16px", color: "black", cursor: "pointer" }}
           />
         </div>
@@ -111,7 +119,10 @@ export const Blog = () => {
             marginBottom: "20px",
           }}
         >
-          <h1 onClick={() => navigate(-1)} className="flex gap-4 cursor-pointer">
+          <h1
+            onClick={() => navigate(-1)}
+            className="flex gap-4 cursor-pointer"
+          >
             <button className="text-[#EF4849]">
               <FaArrowLeft />
             </button>
@@ -119,11 +130,11 @@ export const Blog = () => {
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <Input
-            onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Search here..."
               style={{ width: 300, padding: "9px 5px 9px 5px" }}
             />
-            <Link to={'/dashboard/blog/add-blog'}>
+            <Link to={"/dashboard/blog/add-blog"}>
               <Button
                 type="primary"
                 icon={<PlusOutlined />}
@@ -152,12 +163,12 @@ export const Blog = () => {
         {selectedBlog && (
           <div>
             <img
-              src={selectedBlog.image.props.src}
+              src={selectedBlog?.image.props.src}
               alt="Blog"
               style={{ width: "100%", marginBottom: "20px" }}
             />
-            <h2>{selectedBlog.blogName}</h2>
-            <p>{selectedBlog.content}</p>
+            <h2>{selectedBlog?.blogName}</h2>
+            <p>{selectedBlog?.content}</p>
           </div>
         )}
       </Modal>

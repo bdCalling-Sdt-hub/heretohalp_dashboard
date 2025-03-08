@@ -108,13 +108,13 @@ export const BusinessPartner = () => {
       >
        {selectedRecord && (
           <div>
-            <p><strong>Business Name:</strong> {selectedRecord.businessName}</p>
-            <p><strong>Email:</strong> {selectedRecord.email}</p>
-            <p><strong>Contact Number:</strong> {selectedRecord.contactNumber}</p>
-            <p><strong>Location:</strong> {selectedRecord.city}, {selectedRecord.state}, {selectedRecord.country}</p>
-            <p><strong>Type of Partnership:</strong> {selectedRecord.typeOfPartnership.join(', ')}</p>
-            <p><strong>Business Website:</strong> <a href={selectedRecord.businessWebsite} target="_blank" rel="noopener noreferrer">{selectedRecord.businessWebsite}</a></p>
-            <p><strong>Description:</strong> {selectedRecord.description}</p>
+            <p><strong>Business Name:</strong> {selectedRecord?.businessName}</p>
+            <p><strong>Email:</strong> {selectedRecord?.email}</p>
+            <p><strong>Contact Number:</strong> {selectedRecord?.contactNumber}</p>
+            <p><strong>Location:</strong> {selectedRecord?.city}, {selectedRecord?.state}, {selectedRecord?.country}</p>
+            <p><strong>Type of Partnership:</strong> {selectedRecord?.typeOfPartnership.join(', ')}</p>
+            <p><strong>Business Website:</strong> <a href={selectedRecord?.businessWebsite} target="_blank" rel="noopener noreferrer">{selectedRecord.businessWebsite}</a></p>
+            <p><strong>Description:</strong> {selectedRecord?.description}</p>
           </div>
         )}
       </Modal>

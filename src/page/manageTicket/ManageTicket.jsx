@@ -124,7 +124,7 @@ export const ManageTicket = () => {
       render: (status, record) => (
         <Select
           defaultValue={status}  // Set the default status from the data
-          onChange={(newStatus) => handleStatusChange(record._id, newStatus)}  // Handle status change
+          onChange={(newStatus) => handleStatusChange(record?._id, newStatus)}  // Handle status change
           style={{ width: '100%' }}
         >
           <Select.Option value="pending">Pending</Select.Option>

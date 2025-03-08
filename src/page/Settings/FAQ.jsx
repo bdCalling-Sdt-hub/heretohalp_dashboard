@@ -88,9 +88,9 @@ const FAQ = () => {
 
       <div className="grid grid-cols-2 gap-5 mt-2">
         {faqData?.data?.map((faq, i) => (
-          <div key={faq._id} className="p-2">
+          <div key={faq?._id} className="p-2">
             <p className="pb-3">Question no: {i + 1}</p>
-            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq.question}</p>
+            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq?.question}</p>
             <div className="flex justify-between">
               <p className="py-2">Answer</p>
               <div className="flex gap-4">
@@ -100,12 +100,12 @@ const FAQ = () => {
                 <div className="py-2">
                   <MdDeleteOutline
                     className="text-xl cursor-pointer"
-                    onClick={() => handleDeleteFaq(faq._id)}
+                    onClick={() => handleDeleteFaq(faq?._id)}
                   />
                 </div>
               </div>
             </div>
-            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq.answer}</p>
+            <p className="bg-[#F2F2F2] p-2 rounded-md">{faq?.answer}</p>
           </div>
         ))}
       </div>

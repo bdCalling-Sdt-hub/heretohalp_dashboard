@@ -27,6 +27,7 @@ import ProtectedRoute from "../protectedRoute/ProtectedRoute";
 import { ServicesPricing } from "../page/service/ServicesPricing";
 import { Testomonial } from "../page/testomonial/Testomonial";
 import { AddTestimonial } from "../page/testomonial/AddTestimonial";
+import { News } from "../page/news/News";
 
 
 export const router = createBrowserRouter([
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/manageTicket",
         element: <ManageTicket></ManageTicket>
+      },
+      {
+        path: "/dashboard/news",
+        element: <News></News>
       },
       {
         path: "/dashboard/partnerManage",

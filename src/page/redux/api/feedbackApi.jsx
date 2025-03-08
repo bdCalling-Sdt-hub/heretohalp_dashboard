@@ -7,7 +7,17 @@ const feedback = baseApi.injectEndpoints({
      getFeedback: builder.query({
         query: () => {
             return {
-                url: '/feedback/get-all-feedback',
+                url: '/feedback/get-all-feedbacks?limit=99999999',
+                method: 'GET'
+            }
+        },
+        providesTags: ['feedback']
+    }),
+
+    getAllNewsSubscribe: builder.query({
+        query: ({searchTerm}) => {
+            return {
+                url: `/newsletter/get-all-newsletters?searchTerm=${searchTerm}`,
                 method: 'GET'
             }
         },
@@ -43,6 +53,20 @@ const feedback = baseApi.injectEndpoints({
         },
         invalidatesTags :['feedback']
     }),
+
+    deleteNews: builder.mutation({
+        query: ({ newsletterId }) => {
+          return {
+            url: `/newsletter/delete-newsletter`, // URL for deleting a newsletter
+            method: 'DELETE',
+            body: {
+              newsletterId: newsletterId, // Passing the newsletterId in the body
+            },
+          };
+        },
+        invalidatesTags: ['feedback'],
+      }),
+      
   }),
 });
 
@@ -50,7 +74,9 @@ export const {
 useGetFeedbackQuery,
 useUpdateFeedbackMutation,
 usePostFeedbackMutation,
-useDeleteFeedbackMutation
+useDeleteFeedbackMutation,
+useGetAllNewsSubscribeQuery,
+useDeleteNewsMutation
 
  
 } = feedback;

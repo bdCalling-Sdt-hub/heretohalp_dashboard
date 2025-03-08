@@ -12,7 +12,7 @@ export const EarningGrowth = () => {
   useEffect(() => {
     if (data) {
       // Map monthly registration data to the chart format
-      const monthlyData = Object.entries(data?.data?.monthlyRegistration || {}).map(
+      const monthlyData = Object.entries(data?.data?.monthlyRegistration || {})?.map(
         ([month, count]) => ({
           name: month,
           uv: count,  // Count for the month (replace "uv" with any key you prefer)

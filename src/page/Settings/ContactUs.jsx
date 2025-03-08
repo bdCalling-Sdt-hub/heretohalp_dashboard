@@ -46,7 +46,7 @@ export const ContactUs = () => {
       <div className="mt-10 grid grid-cols-2 gap-6">
         <div className="bg-white p-6 py-11 rounded-lg shadow-md w-full">
           <span className="font-semibold text-lg">Call To Us</span>
-          {phoneNumbers.map((phone, index) => (
+          {phoneNumbers?.map((phone, index) => (
             <div key={index} className="flex items-center space-x-4 mt-4">
               <input
                 type="text"
@@ -66,7 +66,7 @@ export const ContactUs = () => {
         
         <div className="bg-white p-6 py-11 rounded-lg shadow-md w-full">
           <span className="font-semibold text-lg">Write To Us</span>
-          {emails.map((email, index) => (
+          {emails?.map((email, index) => (
             <div key={index} className="flex items-center space-x-4 mt-4">
               <input
                 type="email"

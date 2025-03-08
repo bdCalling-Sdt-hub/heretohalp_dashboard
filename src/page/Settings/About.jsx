@@ -21,7 +21,8 @@ const About = () => {
   const [updateFeedback] = useUpdateFeedbackMutation();
   const [deleteFeedback] = useDeleteFeedbackMutation();
 
-  const feedbackData = data?.data?.result || [];
+  const feedbackData = data?.data?.feedback  || [];
+  console.log(feedbackData)
 
   const openEditModal = (feedback) => {
     setSelectedFeedback(feedback);
@@ -102,17 +103,23 @@ const About = () => {
           <tr>
             <th className="py-2 px-4 text-left">Name</th>
             <th className="py-2 px-4 text-left">Description</th>
+            <th className="py-2 px-4 text-left">Email</th>
+            <th className="py-2 px-4 text-left">InquiryType </th>
+            <th className="py-2 px-4 text-left">Phone Number</th>
             <th className="py-2 px-4 text-left">Time</th>
             {/* <th className="py-2 px-4 text-right">Status</th> */}
           </tr>
         </thead>
         <tbody>
-          {feedbackData.map((feedback) => (
-            <tr key={feedback._id} className="border-b">
-              <td className="py-2 px-4">{feedback.userName}</td>
-              <td className="py-2 px-4">{feedback.feedback}</td>
+          {feedbackData?.map((feedback) => (
+            <tr key={feedback?._id} className="border-b">
+              <td className="py-2 px-4">{feedback?.name}</td>
+              <td className="py-2 px-4">{feedback?.feedback}</td>
+              <td className="py-2 px-4">{feedback?.email}</td>
+              <td className="py-2 px-4">{feedback?.inquiryType}</td>
+              <td className="py-2 px-4">{feedback?.phoneNumber}</td>
               <td className="py-2 px-4">
-                {new Date(feedback.createdAt).toLocaleTimeString()}
+                {new Date(feedback?.createdAt).toLocaleTimeString()}
               </td>
               {/* <td className="py-2 px-4 text-right">
                 <span
