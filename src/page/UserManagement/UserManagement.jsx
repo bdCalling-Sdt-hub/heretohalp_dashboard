@@ -9,7 +9,7 @@ import { imageUrl } from "../redux/api/baseApi";
 const UserManagement = () => {
   const [searchTerm, setSearch] = useState("");
   const { data: userData, refetch } = useAllUserQuery({ searchTerm });
-  console.log(userData)
+  console.log(userData);
   const [userBlock] = useUserBlockMutation();
   const navigate = useNavigate();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -24,9 +24,10 @@ const UserManagement = () => {
         text: user?.authId?.name || "Unknown",
         phone: user?.phoneNumber || "N/A",
       },
-      driverLicense: "N/A",
+
       email: user?.email,
-      location: "N/A",
+
+      phoneNumber: user?.phoneNumber,
       isBlocked: user?.authId?.isBlocked || false,
       authId: user?.authId?._id,
     })) || [];
@@ -53,12 +54,7 @@ const UserManagement = () => {
       ),
       width: "25%",
     },
-    {
-      title: "Driver License",
-      dataIndex: "driverLicense",
-      key: "driverLicense",
-      width: "20%",
-    },
+
     {
       title: "Email",
       dataIndex: "email",
@@ -66,9 +62,9 @@ const UserManagement = () => {
       width: "20%",
     },
     {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
       width: "15%",
     },
     {
@@ -172,7 +168,7 @@ const UserManagement = () => {
               <strong>Name:</strong> {selectedRecord?.name.text}
             </p>
             <p>
-              <strong>Driver License:</strong> {selectedRecord?.driverLicense}
+              <strong>Phone Number:</strong> {selectedRecord?.phoneNumber}
             </p>
             <p>
               <strong>Email:</strong> {selectedRecord?.email}

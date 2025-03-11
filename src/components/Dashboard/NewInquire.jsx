@@ -26,7 +26,7 @@ console.log(userData)
       },
       driverLicense: "N/A",
       email: user?.email,
-      location: "N/A",
+      phoneNumber: user?.phoneNumber,
       isBlocked: user?.authId?.isBlocked || false,
       authId: user?.authId?._id,
     })) || [];
@@ -53,12 +53,7 @@ console.log(userData)
       ),
       width: "25%",
     },
-    {
-      title: "Driver License",
-      dataIndex: "driverLicense",
-      key: "driverLicense",
-      width: "20%",
-    },
+    
     {
       title: "Email",
       dataIndex: "email",
@@ -66,9 +61,9 @@ console.log(userData)
       width: "20%",
     },
     {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
       width: "15%",
     },
     {
@@ -122,7 +117,7 @@ console.log(userData)
             <strong>Name:</strong> {selectedRecord?.name?.text}
           </p>
           <p>
-            <strong>Driver License:</strong> {selectedRecord?.driverLicense}
+            <strong>Phone Number:</strong> {selectedRecord?.phoneNumber}
           </p>
           <p>
             <strong>Email:</strong> {selectedRecord?.email}

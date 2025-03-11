@@ -17,7 +17,6 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold">9</h1>
           <p className="text-[#2E4CB9] mt-3 text-sm">Total Services</p>
         </div>
-        
       </div>
       <div className=" gap-5 mt-5">
         <div className="bg-white">
